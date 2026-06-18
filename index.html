@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=700">
+    <title>Validación de Certificados</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        /* Fondo oscuro principal */
+        body {
+            background-color: #3b3b3b;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            -webkit-text-size-adjust: none; 
+        }
+
+        /* El recuadro gris oscuro exterior */
+        .outer-frame {
+            width: 680px;
+            padding-top: 60px;
+            padding-bottom: 90px;
+            background-color: #2b2b2b;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        /* La franja clara que cruza por detrás */
+        .stripe {
+            position: absolute;
+            width: 100%;
+            top: 108px;
+            bottom: 125px; 
+            background-color: #e5e5e5;
+            z-index: 0;
+        }
+
+        /* La caja principal blanca */
+        .modal-box {
+            background-color: #ffffff;
+            width: 560px; 
+            box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.85);
+            position: relative;
+            z-index: 1; 
+        }
+
+        /* La barra roja superior */
+        .modal-header {
+            background: linear-gradient(to bottom, #cf0000 0%, #8b0000 100%);
+            height: 48px; 
+            width: 100%;
+        }
+
+        /* Contenedor interno */
+        .modal-content {
+            padding: 25px 30px 65px 30px; 
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        /* Columna izquierda (Textos y formulario) */
+        .left-panel {
+            width: 65%;
+            padding-right: 15px;
+        }
+
+        /* Columna derecha (Logo) */
+        .right-panel {
+            width: 35%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+        }
+
+        /* Tipografías */
+        h2 {
+            font-size: 19px;
+            color: #333333;
+            margin: 0 0 16px 0;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 11px;
+            color: #808080;
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+        }
+
+        .ingrese-codigo {
+            margin-bottom: 10px;
+        }
+
+        /* Botón */
+        button {
+            padding: 4px 15px;
+            border: 1px solid #767676;
+            background-color: #efefef;
+            font-size: 12px;
+            color: #000;
+            cursor: pointer;
+            height: 26px;
+            margin-top: 10px;
+        }
+
+        button:active {
+            background-color: #e0e0e0;
+        }
+
+        /* Logo */
+        .logo-img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        /* Vistas ocultas */
+        #resultado {
+            display: none;
+        }
+
+        .datos-resultado {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .datos-resultado span {
+            font-weight: bold;
+            color: #333;
+            display: inline-block;
+            width: 80px;
+        }
+        
+        /* Ajuste para el contenedor de recaptcha */
+        .g-recaptcha {
+            transform: scale(0.9);
+            transform-origin: 0 0;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="outer-frame">
+        <div class="stripe"></div>
+        
+        <div class="modal-box">
+            <div class="modal-header"></div>
+            
+            <div class="modal-content" id="formulario">
+                <div class="left-panel">
+                    <h2>Validación de Certificados</h2>
+                    <p>Aquí podrá validar los Certificados emitidos por INSTITUTO<br>PROFESIONAL LOS LEONES</p>
+                    <p>Para realizarlo debe completar la verificación de seguridad y luego<br>hacer click en Validar.</p>
+                    <p class="ingrese-codigo">Verificación de seguridad:</p>
+                    
+                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                    
+                    <button onclick="validar()">Validar</button>
+                    <p id="errorMsg" style="color: red; display: none; margin-top: 10px; font-weight: bold;">Por favor, complete el captcha.</p>
+                </div>
+                <div class="right-panel">
+                    <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
+                </div>
+            </div>
+
+            <div class="modal-content" id="resultado">
+                <div class="left-panel">
+                    <h2>Validación de Certificados</h2>
+                    <div class="datos-resultado">
+                        <p><span>Nombre:</span> MOISES ANTONIO PATRICIO COVARRUBIA PEREIRA</p>
+                        <p><span>RUT:</span> 15.064.663-4</p>
+                        <p><span>Carrera:</span> TÉCNICO EN PRODUCCIÓN<br><span style="visibility: hidden;"></span></p>
+                        <p><span>Egreso:</span> 18 de enero del 2009</p>
+                        <p><span>Nota:</span> 5,9</p>
+                        <p><span>Sede:</span> VIÑA DEL MAR</p>
+                        <p><span>Modalidad:</span> DIURNK</p>
+                    </div>
+                    <button onclick="volver()" style="margin-top: 15px;">Volver</button>
+                </div>
+                <div class="right-panel">
+                    <img src="leones.png" alt="Instituto Profesional Los Leones" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validar() {
+            // Obtener la respuesta de reCAPTCHA
+            const response = grecaptcha.getResponse();
+            
+            if (response.length !== 0) {
+                // Si hay respuesta, el captcha fue completado
+                document.getElementById('formulario').style.display = 'none';
+                document.getElementById('resultado').style.display = 'flex';
+                document.getElementById('errorMsg').style.display = 'none';
+            } else {
+                // Si está vacío, mostrar error
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+
+        function volver() {
+            document.getElementById('formulario').style.display = 'flex';
+            document.getElementById('resultado').style.display = 'none';
+            // Reiniciar el widget de reCAPTCHA para que se tenga que volver a llenar
+            grecaptcha.reset();
+        }
+    </script>
+
+</body>
+</html>
